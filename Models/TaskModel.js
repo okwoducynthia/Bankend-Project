@@ -5,7 +5,7 @@ const TaskSchema = mongoose.Schema(
     //   type:String,
     //   required:[true, "Please this field is required"],
     //   unique: true,
-    //   default: "chris" //this means that if a user does  not fill this field the default would be chris.
+    //   default: "chris" //this means that if a user does  not fill this field the default would be chris. note that when you have a default value require should be false
     // },
 
     // projectImg:[{

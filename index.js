@@ -6,6 +6,7 @@ const taskRoutes = require("./Routes/TaskRoutes");
 const connectDB = require("./Config/db");
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const userRoutes = require("./Routes/UserRoutes")
 
 const server = express();
 connectDB();
@@ -15,6 +16,8 @@ server.use(cors())
 const jsonParser = bodyParser.json()
 server.use(jsonParser);
 server.use("/Task", taskRoutes);
+
+server.use("/api/User", userRoutes);
 
 // const studentInfo = [
 //   {
