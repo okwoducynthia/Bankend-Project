@@ -3,7 +3,7 @@ const TaskModel = require("../Models/TaskModel");
 
 const GetAllTask = async (req, res) => {
   try {
-    const result = await TaskModel.find().sort({createdAt:-1});
+    const result = await TaskModel.find().sort({createdAt:-1}).populate("assignedBy");
     res.status(200).json(result);
   } catch (error) {
     res.status(404).json({
@@ -15,7 +15,7 @@ const GetAllTask = async (req, res) => {
 const GetSingleTask = async (req, res) => {
   const { id } = req.params
   try {
-    const result = await TaskModel.findById(id);
+    const result = await TaskModel.findById(id).populate("assignedBy");
     if (!result) {
       return res.status(404).json({ message: `Task ${id} not found` });
     } else {
@@ -30,7 +30,7 @@ const GetSingleTask = async (req, res) => {
 
 const CreateTask = async (req, res) => {
 
-  const {title, assignedTo, description, startDate, endDate} = req.body
+  const {title, assignedTo, description, startDate, endDate, assignedBy} = req.body
   try {
 
     /// TO CHECK IF TASK EXIST IN OUR DB UNDER TASK COLLECTION
@@ -43,7 +43,12 @@ const CreateTask = async (req, res) => {
 
     /// TO CREATE A NEW TASK
     const creatNewTask = await TaskModel.create({
-      title, assignedTo, description, startDate, endDate
+      title, 
+      assignedTo, 
+      description, 
+      startDate, 
+      endDate, 
+      assignedBy
     })
 
     /// SAVING EVERYTHING IN THE REQ.BODY TO THE DB
@@ -59,7 +64,8 @@ const CreateTask = async (req, res) => {
       assignedTo: taskResult.assignedTo,
       description: taskResult.description,
       startDate: taskResult.startDate,
-      endDate: taskResult.endDate
+      endDate: taskResult.endDate,
+      assignedBy: taskResult.assignedBy,
     });
   } 
   

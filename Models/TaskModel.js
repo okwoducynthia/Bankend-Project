@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema.Types;
 const TaskSchema = mongoose.Schema(
   {
     // lastName:{
@@ -12,53 +13,57 @@ const TaskSchema = mongoose.Schema(
     //   pix:{
     //     type: string
     //   }
-    // }], 
-    // 
+    // }],
+    //
     // to include an image OR
-    
+
     // projectImg: [""]
 
-    title:{
+    title: {
       type: String,
       required: true,
     },
-    assignedTo:{
+    assignedTo: {
       type: String,
       required: true,
     },
-    description:{
+    description: {
       type: String,
       required: true,
       minLength: [5, "Minimum lenght should be more than 5 letter words"],
-      maxLength: [1000, "Maximum length should not exceed 1000 words"]
+      maxLength: [1000, "Maximum length should not exceed 1000 words"],
     },
-    startDate:{
+    startDate: {
       type: Date,
       required: true,
     },
-    endDate:{
+    endDate: {
       type: Date,
       required: true,
     },
-    projectLink:{
+    assignedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    projectLink: {
       type: String,
       required: false,
     },
-    isCompleted:{
+    isCompleted: {
       type: Boolean,
       default: false,
     },
-    Status:{
+    Status: {
       type: String,
       enum: ["Pending", "In Progress", "Completed"],
-      default: "Pending"
+      default: "Pending",
     },
   },
 
-
   {
-    timestamps:true
+    timestamps: true,
   }
-)
+);
 
-module.exports = mongoose.model("Task", TaskSchema)
+module.exports = mongoose.model("Task", TaskSchema);
